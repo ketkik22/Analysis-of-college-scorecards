@@ -1,11 +1,12 @@
 from pymongo import MongoClient
+from config import *
 
 try:
-    mongoClient = MongoClient("mongodb://172.28.128.3:27017")
+    mongoClient = MongoClient(HOST_NAME, PORT_NUMBER)
 
     db = mongoClient.usdata
 
-    data = db.cityinfo.find().limit(10)
+    data = db.cityinfo.find({"state": {"$in" : ["CA", "CO", "MA"]}}).limit(10)
 
     for d in data:
         print d
