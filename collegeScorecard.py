@@ -19,7 +19,21 @@ try:
             print "Highest degree offered by %s is Bachelor's degree" % post["INSTNM"]
         elif (post["HIGHDEG"] == 4):
             print "Highest degree offered by %s is Graduate degree" % post["INSTNM"]
-        #print post["HIGHDEG"]
+
+        print "\n"
+
+        """
+                UPDATE QUERY
+        """
+        print "BEFORE UPDATE"
+        for record in collection.find({"INSTNM":"Ohio State University-Lima Campus"},{"INSTNM":1, "HIGHDEG": 1}):
+            print record
+
+        collection.update_many({"INSTNM":"Ohio State University-Lima Campus"},{"$set": {"HIGHDEG" : 4.0}})
+
+        print "\nAFTER UPDATE"
+        for record in collection.find({"INSTNM": "Ohio State University-Lima Campus"}, {"INSTNM": 1, "HIGHDEG": 1}):
+            print record
 
     mongoClient.close()
 except Exception, e:
